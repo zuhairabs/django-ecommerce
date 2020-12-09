@@ -1,12 +1,14 @@
-body{
-	background-color: hsl(0, 0%, 98%);
-}
-
 h1,h2,h3,h4,h5,h6{
 	color:hsl(0, 0%, 30%);
 }
 
+h3: {
+	font-family: 'Work Sans', sans-serif !important;
+	font-size: 20px;
+}
+
 .box-element{
+	width: 100%;
 	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
 	background-color: #fff;
 	border-radius: 4px;
@@ -26,7 +28,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .bg-dark{
-	background-color: #4f868c!important;
+	background-color: #5d959c!important;
 }
 
 #cart-icon{
@@ -47,11 +49,15 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
-	margin-top: 10px;
+	margin-bottom: 2rem;
+}
+
+.box {
+	border-radius: 5rem !important;
 }
 
 .btn{
-	border-radius: 0;
+	border-radius: 4px;
 }
 
 .row-image{

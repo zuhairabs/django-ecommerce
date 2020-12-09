@@ -4,12 +4,14 @@
 	<div class="row">
 		{% for product in product_categories %}
 			<div class="col-lg-4">
+			<div class="box">
 				<img class="thumbnail" src="{{ product.get_imageURL }}">
 				<div class="box-element product">
-					<h6><strong>{{product.name}}</strong></h6>
+					<h3 style="text-align: center;">{{product.name}}</h3>
 					<hr>
-					<a class="btn btn-outline-success" href="{% url 'show_items' product.id %}">View Items</a>
+					<a class="btn btn-outline-success" style="width: 100%;" href="{% url 'show_items' product.id %}">View Items</a>
 
+				</div>
 				</div>
 			</div>
 		{% endfor %}

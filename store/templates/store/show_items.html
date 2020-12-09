@@ -5,16 +5,18 @@
 	<div class="row">
 		{% for product in products %}
 			<div class="col-lg-4">
-				<img class="thumbnail" src="{{ product.get_imageURL }}">
-				<div class="box-element product">
-					<h6><strong>{{product.name}}</strong></h6>
+				<div class="box">
+				<img class="thumbnail" style="height: 300px!important;" src="{{ product.get_imageURL }}">
+				<div class="box-element product" style="margin-bottom: 10px">
+					<h3>{{product.name}}</h3>
+					<h4 style="display: inline-block; float: right; margin-top: -30px"><strong>&#8377;{{product.price}}</strong></h4>
 					<hr>
 
-					<button  class="update_cart btn btn-outline-secondary add-btn" product_id ="{{product.id}}">Add to Cart</button>
+					<button class="update_cart btn btn-outline-secondary add-btn ml-4" style="width: 40%;" product_id ="{{product.id}}">Add to Cart</button>
 
-					<a class="btn btn-outline-success" href="{% url 'item_detail' product.id %}">View</a>
-					<h4 style="display: inline-block; float: right"><strong>&#8377;{{product.price}}</strong></h4>
+					<a class="btn btn-outline-success" style="width: 40%;" href="{% url 'item_detail' product.id %}">View</a>
 
+				</div>
 				</div>
 			</div>
 		{% endfor %}
