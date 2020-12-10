@@ -2,65 +2,106 @@
 {% load static %}
 {% block content %}
 	{% if total_item_cart %}
-		<h2>Shopping Cart</h2>
+		<h2 class="text-center mt-3 mb-2">Shopping Cart</h2>
+		<h5 class="text-center">Items: <strong>{{total_item_cart}}</strong></h5>
 	{% else %}
-		<h2>Your Shopping Cart is empty !!</h2>
+		<h2 class="text-center">Your Shopping Cart is empty !!</h2>
 	{% endif %}
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="box-element">
+	
+	{% if request.user.is_authenticated %}
+	<!-- Start Cart Section -->
+<section class="cart-section pt_large">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-md-12">
+            	<div class="cart-table table-responsive">
+                	<table class="table table-bordered text-center">
+                    	<thead>
+                        	<tr class="row-1">
+                            	<th class="row-title"><p>Item</p></th>
+                                <th class="row-title"><p>Product Name</p></th>
+                                <th class="row-title"><p>Price</p></th>
+                                <th class="row-title"><p>Quantity</p></th>
+                                <th class="row-title"><p>Subtotal</p></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+						{% for item in items %}
+                        	<tr class="row-2">
+                            	<td class="row-close close-1" data-title="product-remove"><a href="#"><i class="ion-close-circled"></i></a></td>
+                            	<td class="row-img"><img src="{{item.product.get_imageURL}}" alt="cart-img"></td>
+                                <td class="product-name" data-title="Product"><a href="#">{{item.product.name}}</a></td>
+                                <td class="product-price" data-title="Price"><p>&#8377; {{item.product.price}}</p></td>
+                                <td class="product-quantity" data-title="Quantity">
+                                	<div class="quantity_filter">
+                                        <input action ="remove" product_id ="{{item.product.id}}" type="button" value="-" class="minus update_cart_quantity chg-quantity">
+                                        <input class="quantity-number qty" type="text" value="{{item.quantity}}" min="1" max="10">
+                                        <input action ="add" product_id ="{{item.product.id}}" type="button" value="+" class="plus update_cart_quantity chg-quantity">
+                               		</div>
+                                </td>
+                                <td class="product-total" data-title="Subprice"><p>&#8377; {{item.get_total}}</p></td>
+                            </tr>
+						{% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="12">
+                                    <ul class="table-btn">
+                                        <li><a href="{% url 'store' %}" class="btn btn-secondary"><i class="fa fa-chevron-left"></i>Continue Shopping</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Cart Section -->
+{% endif %}
 
-				<a  class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
-				<br>
-				<br>
-				<table class="table" style="background-color: lightyellow">
-					<tr>
-						<th><h5>Items: <strong>{{total_item_cart}}</strong></h5></th>
-						<th><h5>Total:<strong> &#8377;{{total_cost_cart}}</strong></h5></th>
-						<th>
-							{% if check %}
-								<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
-							{% endif %}
-						</th>
-					</tr>
-				</table>
+<!-- Start Cart Box Section -->
+<section class="cart-box-section pb_large">
+	<div class="container">
+    	<div class="row justify-content-between">
+        	<div class="col-lg-4 col-md-6">
+            	<div class="cart-inner-box box-1 text-center">
+                	<div class="ci-title">
+                    	<h6>Promotional code</h6>
+                    </div>
+                    <div class="ci-caption">
+                    	<p>Enter Your Coupon Code If you have one</p>
+                        <form>
+                        	<input required="" class="form-control" type="text" placeholder="Coupon Code" disabled>
+                            <button class="btn btn-secondary" type="submit">Apply Coupon Code</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+            	<div class="cart-inner-box box-2 text-center">
+                	<div class="ci-title">
+                    	<h6>Cart Total</h6>
+                    </div>
+                    <div class="ci-caption">
+                        <ul>
+                        	<li>Subtotal <span>&#8377; {{total_cost_cart}}</span></li>
+                            <li>Total <span>&#8377; {{total_cost_cart}}</span></li>
 
-			</div>
+                        </ul>
+                    </div>
+                    <div class="ci-btn">
+					{% if check %}
+                        <a href="{% url 'checkout' %}" class="btn btn-primary btn-block rounded-0">Proceed to Checkout</a>
+					{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Cart Box Section -->
 
-			<br>
-			{% if request.user.is_authenticated %}
-				<div class="box-element">
-						<div class="cart-row" style="background-color: lightgray">
-							<div style="flex:2"></div>
-							<div style="flex:2"><strong>Item</strong></div>
-							<div style="flex:1"><strong>Price</strong></div>
-							<div style="flex:1"><strong>Quantity</strong></div>
-							<div style="flex:1"><strong>Total</strong></div>
-						</div>
-					{% for item in items %}
-						<div class="cart-row" style="background-color: lightyellow; height: 80px">
-							<div style="flex:2"><a href="{% url 'item_detail' item.product.id %}"><img class="row-image" src="{{item.product.get_imageURL}}" style="width: 80px; height: 80px;margin-left: 20px"></a></div>
-							<div style="flex:2"><p>{{item.product.name}}</p></div>
-							<div style="flex:1"><p>&#8377;{{item.product.price}}</p></div>
-							<div style="flex:1">
-								<p class="quantity">{{item.quantity}}</p>
-								<div class="quantity">
-									<img action ="add" product_id ="{{item.product.id}}"  class="update_cart_quantity chg-quantity" src="{% static  'images/arrow-up.png' %}">
-							
-									<img action ="remove" product_id ="{{item.product.id}}" class="update_cart_quantity chg-quantity " src="{% static  'images/arrow-down.png' %}">
-								</div>
-							</div>
-							<div style="flex:1"><p>${{item.get_total}}</p></div>
-						</div>
-					{% endfor %}
-				</div>
-			{% endif %}
-		</div>
-	</div>
-
-	<br><br>
-	<blockquote class="blockquote text-center">
-		<p class="mb-0">** That's it! **</p>
-		<footer class="blockquote-footer"> You've scrolled to the end of the List!</footer>
-	</blockquote>
+	
 {% endblock content %}

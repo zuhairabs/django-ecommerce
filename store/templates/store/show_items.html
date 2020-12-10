@@ -1,31 +1,163 @@
 {% extends 'store/main.html' %}
 {% load static %}
 {% block content %}
-	<h1 style="text-align: center;">{{product_category.name}}</h1>
-	<div class="row">
-		{% for product in products %}
-			<div class="col-lg-4">
-				<div class="box">
-				<img class="thumbnail" style="height: 300px!important;" src="{{ product.get_imageURL }}">
-				<div class="box-element product" style="margin-bottom: 10px">
-					<h3>{{product.name}}</h3>
-					<h4 style="display: inline-block; float: right; margin-top: -30px"><strong>&#8377;{{product.price}}</strong></h4>
-					<hr>
-
-					<button class="update_cart btn btn-outline-secondary add-btn ml-4" style="width: 40%;" product_id ="{{product.id}}">Add to Cart</button>
-
-					<a class="btn btn-outline-success" style="width: 40%;" href="{% url 'item_detail' product.id %}">View</a>
-
-				</div>
-				</div>
-			</div>
-		{% endfor %}
-	</div>
-
-	<br><br>
-	<blockquote class="blockquote text-center">
-		<p class="mb-0">** That's it! **</p>
-		<footer class="blockquote-footer"> You've scrolled to the end of the List!</footer>
-	</blockquote>
+	<h1 class="mt-4" style="text-align: center;">{{product_category.name}}</h1>
+					
+<section class="shop-inner-section pt_large pb_large">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-xl-9 col-lg-8 col-md-12">
+            	<div class="shop-options d-sm-flex justify-content-between align-items-center">
+                	<div class="sorting-option">
+                    	<select class="sorting-items" name="category">
+                            <option value="menu_order" selected="selected">Default sorting</option>
+                            <option value="popularity">Sort by popularity</option>
+                            <option value="rating">Sort by average rating</option>
+                            <option value="date">Sort by newness</option>
+                            <option value="price">Sort by price: low to high</option>
+                            <option value="price-desc">Sort by price: high to low</option>
+                        </select>
+                    </div>
+                    <div class="showing-items">
+                        <p>Showing 1–9 of 15 results</p>
+                    </div>
+                    <div class="shop-list_grid">
+                        <div class="list_grid-btns">
+                        	<a href="javascript:void(0)" class="list-view"><i style="font-size: 28px;" class="fa fa-list mb-4"></i></a>
+                    		<a href="javascript:void(0)" class="grid-view on"><i style="font-size: 28px;" class="fa fa-th mb-4"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row list_grid_container grid justify-content-center">
+				{% for product in products %}
+                	<div class="col-md-4 col-6">
+                    	<div class="product-box common-cart-box box-1">
+                        	<div class="product-img common-cart-img">
+                            	<img width="100%" height="300px" src="{{ product.get_imageURL }}" alt="product-img">
+                                <div class="hover-option">
+                                	<div class="add-cart-btn">
+                                    	<button class="update_cart btn btn-primary" product_id ="{{product.id}}">Add To Cart</button>
+                                    </div>
+                                	<ul class="hover-icon">
+                                        <li><a href="{% url 'item_detail' product.id %}" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info common-cart-info text-center">
+                            	<a href="product-detail.html" class="cart-name">{{product.name}}</a>
+                                <p class="cart-price"><del>&#8377; 9999.00</del>&#8377;{{product.price}}</p>
+                                <p class="product-list-text" style="">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                <div class="hover-option">
+                                	<div class="add-cart-btn">
+                                    	<button class="update_cart btn btn-primary" product_id ="{{product.id}}">Add To Cart</button>
+                                    </div>
+                                	<ul class="hover-icon">
+                                        <li><a href="{% url 'item_detail' product.id %}" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					{% endfor %}
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav>
+                            <ul class="pagination justify-content-center">
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+        		</div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-12 order-lg-first"> 
+            	<div class="shop-sidebar">
+                	<div class="side-quantity-box side-box">
+                    	<div class="side-box-title">
+                        	<h6>Categories</h6>
+                        </div>
+                        <div class="quantity-box-detail">
+                        	<ul>
+                            	<li><a href="#">Women<span>(10)</span></a></li>
+                                <li><a href="#">Men<span>(05)</span></a></li>
+                                <li><a href="#">Footwear<span>(15)</span></a></li>
+                                <li><a href="#">Bags And Backpacks<span>(20)</span></a></li>
+                                <li><a href="#">Accessories<span>(07)</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="side-filter-box side-box">
+                        <div class="side-box-title">
+                            <h6>Filter</h6>
+                        </div>
+                        <div class="filter-box-detail">
+                            <div id="slider-range"></div>
+                            <div class="price_slider_amount">
+                                <div class="slider-values d-flex align-items-center">
+                                	<p>Price</p>
+                                    <input type="text" id="amount" name="price"  placeholder="Add Your Price" /> 
+                                </div>
+                            </div>
+                        </div>
+                	</div>
+                    <div class="side-quantity-box side-box">
+                    	<div class="side-box-title">
+                        	<h6>color</h6>
+                        </div>
+                        <div class="quantity-box-detail">
+                        	<ul>
+                            	<li><a href="#">black<span>(10)</span></a></li>
+                                <li><a href="#">blue<span>(05)</span></a></li>
+                                <li><a href="#">red<span>(15)</span></a></li>
+                                <li><a href="#">white<span>(20)</span></a></li>
+                                <li><a href="#">grey<span>(07)</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="side-quantity-box side-box">
+                    	<div class="side-box-title">
+                        	<h6>recent Product</h6>
+                        </div>
+                        <div class="side-recent-product">
+                        	<div class="cart-prodect d-flex">
+                                <div class="cart-img">
+                                    <img src="https://bestwebcreator.com/ATZShop/demo/image/recent-product-1.png" alt="recent-product">
+                                </div>
+                                <div class="cart-product">
+                                    <a href="product-detail.html">Ornare sed consequat</a>
+                                    <a href="product-detail.html" class="cp-comments"><i class="fa fa-comments"></i> 5 Comments</a>
+                                </div>
+                            </div>
+                            <div class="cart-prodect d-flex">
+                                <div class="cart-img">
+                                    <img src="https://bestwebcreator.com/ATZShop/demo/image/recent-product-2.png" alt="recent-product">
+                                </div>
+                                <div class="cart-product">
+                                    <a href="product-detail.html">Pellentesque posuere</a>
+                                    <a href="product-detail.html" class="cp-comments"><i class="fa fa-comments"></i> 5 Comments</a>
+                                </div>
+                            </div>
+                            <div class="cart-prodect d-flex">
+                                <div class="cart-img">
+                                    <img src="https://bestwebcreator.com/ATZShop/demo/image/recent-product-3.png" alt="recent-product">
+                                </div>
+                                <div class="cart-product">
+                                    <a href="product-detail.html">Pellentesque posuere</a>
+                                    <a href="product-detail.html" class="cp-comments"><i class="fa fa-comments"></i> 5 Comments</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+<!-- End Shop Section -->
 
 	{% endblock content %}

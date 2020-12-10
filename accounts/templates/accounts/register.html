@@ -1,16 +1,21 @@
 {% extends 'store/main.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<h1 class="display-5">Create a new account!</h1>
-<br>
+<div class="col-12">
+    <div class="white-popup lr-popup">
+    <h4 class="text-center">Register</h4>
 <form method="POST">
 	{% csrf_token %}
 	{{ form|crispy }}
 	<br>
+	<div class="text-center">
 	<input type="submit" name="submit" class="btn btn-primary mb-2" value="Register">
 	<input type="reset" name="reset" class="btn btn-secondary mb-2" value="Reset">
-	<br>
-	<a href="{% url 'login' %}">Or Log into an existing account!</a>
+	
+	<a href="{% url 'login' %}" class="sign-up mt-2">Or Log into an existing account!</a>
+	</div>
 </form>
+</div>
+</div>
 
 {% endblock %}

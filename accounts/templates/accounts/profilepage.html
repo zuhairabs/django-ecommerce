@@ -29,54 +29,50 @@
             </div>
         </div>
 	</div>
-	<hr class="my-4">
-	<hr class="my-4">
-	<h3>Ordered Items : </h3>
-	<div>
-		{% if request.user.is_authenticated %}
-			{% for order in ordered %}
-				<div class="box-element" style="background-color: lightgray" ">
-						<div class="cart-row">
-							<div style="flex:1">
-								<strong>Order Placed</strong>
-								<h6>{{ order.order.date_ordered | date:"d M Y"}} </h6>
-							</div>
-							<div style="flex:1">
-								<strong>Transaction Id</strong>
-								<h6>{{order.order.transaction_id}}</h6>
-							</div>
-							<div style="flex:1">
-								<strong>Total</strong>
-								<h6>&#8377;{{order.order.amount}}</h6>
-							</div>
-							<div style="flex:1">
-								<strong>Shipped to :</strong>
-								<div>{{order.order.recepient_fullname}}({{order.order.phone_no}})</div>
-								<div>{{order.order.address_line1}}, {{order.order.address_line2}}</div>
-								<div>{{order.order.city}},{{order.order.state}},{{order.order.country}}</div>
-								<div>{{order.order.zipcode}}</div>
-							</div>
+	
+	<hr class="mt-3 mb-3">
+	
+	<h3 class="text-center">Ordered Items : </h3>
+    <br>
+    <div>
+        {% if request.user.is_authenticated %}
+            {% for order in ordered %}
+			<div class="col-lg-12 col-md-12 mt-4">
+            	<div class="cart-inner-box box-2 text-center">
+                	<div class="ci-title">
+                    	<h6>Orders</h6>
+                    </div>
+					
+                    <div class="ci-caption">
+                        <ul>
+                        	<li>Order Placed <span>{{ order.order.date_ordered | date:"d M Y"}}</span></li>
+                            <li>Transaction Id <span>{{order.order.transaction_id}}</span></li>
+                            <li>Total<span>&#8377;{{order.order.amount}}</span></li>
+                            <li>Shipped to :<span> {{order.order.recepient_fullname}} ({{order.order.phone_no}}) 
+                                {{order.order.address_line1}}, {{order.order.address_line2}}
+                                {{order.order.city}}, {{order.order.state}}, {{order.order.country}}, 
+                                {{order.order.zipcode}}</span></li>
+						</ul>
+					</div>
+						<div class="ci-title">
+                    	<h6>Items</h6>
 						</div>
-					{% for item in order.items %}
-						<div class="cart-row" style="background-color: lightblue;height: 80px">
-							<div style="flex:1"><img style="width: 80px; height: 80px;margin-left: 20px" class="row-image" src="{{item.get_imageURL}}"></div>
-							<div style="flex:1"><p>Product :{{item.name}}</p></div>
-							<div style="flex:1"><p>Price :&#8377;{{item.price}}</p></div>
-							<div style="flex:1">
-								<p class="quantity">Quantity :{{item.quantity}}</p>
-							</div>
-							<div style="flex:1"><p>Total :${{item.get_total}}</p></div>
-						</div>
-					{% endfor %}
-				</div>
-				<br>
-			{% endfor %}
-			<br>
-		{% endif %}
-	</div>
-	<br><br>
-	<blockquote class="blockquote text-center">
-		<p class="mb-0">** That's it! **</p>
-		<footer class="blockquote-footer"> You've scrolled to the end of the List!</footer>
-	</blockquote>
+						<div class="ci-caption">
+						<ul>
+								{% for item in order.items %}
+								<li>Image: <span><img style="width: 50px; height: 50px;" class="mt--2" src="{{item.get_imageURL}}"> </span></li>
+								<li>Product <span>{{item.name}}</span></li>
+								<li>Price <span>&#8377;{{item.price}}</span></li>
+								<li>Quantity <span>{{item.quantity}}</span></li>
+								<li>Total <span>{{item.get_total}}</span></li>
+								{% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			
+            {% endfor %}
+        {% endif %}
+    </div>
+	
 {% endblock %}

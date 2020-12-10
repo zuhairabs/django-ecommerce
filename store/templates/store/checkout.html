@@ -2,75 +2,139 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-	<h2>Checkout Page :</h2>
-     <div class="row">
-		<div class="col-lg-6">
-			<div class="box-element" id="form-wrapper">
-				<form method="POST" action="{% url 'checkout'%}">
-					{% csrf_token %}
-					{{ form|crispy }}
-					<br>
-					<input type="submit" class="btn btn-primary mb-2" name="submit" , value='Add Address'>	
-				</form>
-			</div>
-		</div>
-
-		<div class="col-lg-6">
-			<div class="box-element">
-				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
-				<hr>
-				<h3>Order Summary</h3>
-				<hr>
-				{% for item in items %}
-					<div class="cart-row" style="background-color: lightyellow;height: 80px">
-						<div style="flex:2"><a href="{% url 'item_detail' item.product.id %}"><img class="row-image" src="{{ item.product.get_imageURL }}" style="width: 80px; height: 80px;margin-left: 20px"></a></div>
-						<div style="flex:2"><p>{{item.product.name}}</p></div>
-						<div style="flex:1"><p>&#8377;{{item.product.price|floatformat:2}}</p></div>
-						<div style="flex:1"><p>x{{item.quantity}}</p></div>
-					</div>
-				{% endfor %}
-				<h5>Items:   {{total_item_cart}}</h5>
-				<h5>Total:   &#8377;{{total_cost_cart}}</h5>
-			</div>
-		</div>
-	</div>
-
-	<br>
-	<br>
-	{% if request.user.is_authenticated %}
-				<h6>Use below Addresses</h6>
-				<div class="box-element">
+<div class="mt-4 text-center">
+	<h2 >Checkout</h2>
+</div>
+	
+	<!-- Start Checkout Section -->
+<section class="checkout-inner-page pt_large pb_large">	
+	<div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-12">
+                <div class="checkout-process">
+                    <div class="checkout-parts">
+                    	<form role="form" method="POST" action="{% url 'checkout'%}">
+                            <div class="card mb-3">
+                                <div class="card-header form-wizard-step">
+                                    <h5>
+                                         <a class="btn btn-link"><span>01</span>Shipping information</a>
+                                    </h5>
+                                </div>
+                                	<div class="card-body">
+                                    	<div class="check-tab">
+                                            {% csrf_token %}
+											{{ form|crispy }}
+											
+											<div class="text-center">
+											<input type="submit" class="btn btn-primary mb-2" name="submit" , value='Add Address'>
+											</div>
+                                    	</div>
+                                    </div>
+                            </div>
+                            <div class="card ord_tab">
+                                <div class="card-header form-wizard-step">
+                                    <h5>
+                                        <a class="btn btn-link"><span>02</span>Order review</a>
+                                    </h5>
+                                </div>
+                                	<div class="card-body">
+                                    	<div class="check-tab">
+                                        	<div class="order-table">
+                                            	<div class="order-review-table table-responsive">
+                                                	<table class="table table-bordered text-center">
+                                                    <thead>
+                                                        <tr class="row-1">
+                                                            <th class="row-title text-left">Product Name</th>
+                                                            <th class="row-title">Price</th>
+                                                            <th class="row-title">Quantity</th>
+                                                            <th class="row-title">Items</th>
+                                                        </tr>
+                                                    </thead>
+													{% for item in items %}
+                                                    <tbody>
+                                                        <tr class="row-2">
+                                                            <td class="product-name"><img class="mr-3" src="{{ item.product.get_imageURL }}" style="width: 50px; height: 50px;margin-left: 0;">{{item.product.name}}</td>
+                                                            <td class="product-price">&#8377;{{item.product.price|floatformat:2}}</td>
+                                                            <td class="product-quantity"> x{{item.quantity}}</td>
+                                                            <td class="product-subtotal">{{total_item_cart}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr class="row-4">
+                                                            <td class="text-left" colspan="3">Cart Subtotal</td>
+                                                            <td class="pr_subtotal">&#8377; {{total_cost_cart}}</td>
+                                                        </tr>
+                                                        <tr class="row-5">
+                                                            <td class="text-left" colspan="3">Promotional Code</td>
+                                                            <td class="pr_subtotal">-$0.00</td>
+                                                        </tr>
+                                                        <tr class="row-6">
+                                                            <td class="text-left" colspan="3">Order Total</td>
+                                                            <td class="product-subtotal">&#8377; {{total_cost_cart}}</td>
+                                                        </tr>
+                                                    </tfoot>
+													{% endfor %}
+                                                </table>
+                                            	</div>
+                                        	</div>
+                                    	</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-12">
+            	<div class="cart-inner-box box-2 text-center">
+                	<div class="ci-title">
+                    	<h6>Cart Total</h6>
+                    </div>
+                    <div class="ci-caption">
+                        <ul>
+                        	<li>Subtotal <span>&#8377;{{total_cost_cart}}</span></li>
+                            <li>Shipping <span>Free</span></li>
+                            <li>Coupon Code <span>-$0.00</span></li>
+                        </ul>
+                    </div>
+                    <div class="ci-btn">
+                        <ul>
+                        	<li>Total Order<span> &#8377;{{total_cost_cart}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<div class="col-lg-6 col-md-12 mt-4">
+            	<div class="cart-inner-box box-2 text-center">
+                	<div class="ci-title">
+                    	<h6>Use below Addresses</h6>
+                    </div>
 					{% for adr in addresses %}
-						<div class="cart-row">
-							<div>
-								<h4><strong><p>{{adr.recepient_fullname}}</p></strong></h4>
-								<div>  Phone Number :-> {{adr.phone_no}}</div>
-								<pre class="quantity"> {{adr.address_line1}},</pre>
-								<pre class="quantity">{{adr.address_line2}},</pre>
-								<pre class="quantity">{{adr.city}},</pre>
-								<pre class="quantity">{{adr.state}},</pre>
-								<pre class="quantity">{{adr.country}},</pre>
-								<pre class="quantity">{{adr.zipcode}}</pre>
-								<br>
-								<div class="quantity">
-									<pre><a href="{% url 'make_payment' adr.id %}">Use</a></pre>
-								</div>
-								<div class="quantity">
-									<pre><a href="{% url 'update_address' adr.id %}">Edit</a></pre>
-								</div>
-								<div class="quantity">
-									<pre><a href="{% url 'delete_address' adr.id %}">Delete</a></pre>
-								</div>
+                    <div class="ci-caption">
+                        <ul>
+                        	<li>Recipient Name <span>{{adr.recepient_fullname}}</span></li>
+                            <li>Phone <span>{{adr.phone_no}}</span></li>
+                            <li>Address Line 1 <span>{{adr.address_line1}}</span></li>
+                            <li>Address Line 2 <span>{{adr.address_line2}}</span></li>
+                            <li>City <span>{{adr.city}}</span></li>
+                            <li>State <span>{{adr.state}}</span></li>
+                            <li>Country <span>{{adr.country}}</span></li>
+                            <li>Zip Code <span>{{adr.zipcode}}</span></li>
+                        </ul>
+                    </div>
+					<div class="ci-btn">
+							<div class=" text-center">
+								<a href="{% url 'make_payment' adr.id %}" class="btn btn-primary">Place Order</a>
+								<a href="{% url 'update_address' adr.id %}" class="btn btn-secondary">Edit Address</a>
+								<a href="{% url 'delete_address' adr.id %}" class="btn btn-danger">Delete Address</a>
 							</div>
-						</div>
+                    </div>
 					{% endfor %}
-				</div>
-				<p>* It is static website , so once you will use one of the above addresses , you will not be directed to the payment gateway , instead , you will be directed to the PAYMENT SUCCESSFUL PAGE .</p>
-	{% endif %}
-	<br><br>
-	<blockquote class="blockquote text-center">
-		<p class="mb-0">** That's it! **</p>
-		<footer class="blockquote-footer"> You've scrolled to the end of the List!</footer>
-	</blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Checkout Section -->
+
 
 {% endblock content %}
