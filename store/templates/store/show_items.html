@@ -39,12 +39,12 @@
                                     	<button class="update_cart btn btn-primary" product_id ="{{product.id}}">Add To Cart</button>
                                     </div>
                                 	<ul class="hover-icon">
-                                        <li><a href="{% url 'item_detail' product.id %}" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                        <li><a href="{% url 'item_detail' product.id %}" class=""><i class="fa fa-eye"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="product-info common-cart-info text-center">
-                            	<a href="product-detail.html" class="cart-name">{{product.name}}</a>
+                            	<a href="{% url 'item_detail' product.id %}" class="cart-name">{{product.name}}</a>
                                 <p class="cart-price"><del>&#8377; 9999.00</del>&#8377;{{product.price}}</p>
                                 <p class="product-list-text" style="">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
                                 <div class="hover-option">
@@ -52,7 +52,7 @@
                                     	<button class="update_cart btn btn-primary" product_id ="{{product.id}}">Add To Cart</button>
                                     </div>
                                 	<ul class="hover-icon">
-                                        <li><a href="{% url 'item_detail' product.id %}" class="quickview-popup-link"><i class="fa fa-eye"></i></a></li>
+                                        <li><a href="{% url 'item_detail' product.id %}" class=""><i class="fa fa-eye"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
